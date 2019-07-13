@@ -1,0 +1,13 @@
+Practical Exercise
+Create four variables of the GenericValue type in your sequence
+A with value “123”
+B with value “456”
+C with value 123
+D with value 456
+Print to the console various operations with them and see what is the result
+
+A + B
+C + D
+A + C
+C + A
+
