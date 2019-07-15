@@ -1,0 +1,112 @@
+Practical Exercise - Walkthrough
+ First, UiPath Studio must read the .csv file to retrieve the data.
+
+Place the .csv file downloaded from the previous material in any folder, preferably in the corresponding Studio project folder, for easy navigation.
+
+Find and add a Read CSV activity to the main sequence.
+
+Enter the path to Members Only.csv in the FilePath section of the Properties Panel.
+
+If the file is in the project folder, simply type in its name. Otherwise, we have to use the full path.
+
+Make sure the IncludeColumnNames check box is selected, because the “First”, “Last”, and “Club Member” column headers have to be retained.
+
+In the Output field, use the Ctrl + K command to generate a variable. Type names in the field that is displayed.
+
+A variable of the appropriate type is created.
+
+
+
+Create a variable in the Variables panel, and call it clubMembers.
+
+Double click the Type section and select Array of [T].
+
+In the dropdown menu that appears, select Browse for types.
+
+In the subsequent variable type menu, search for DataRow.
+
+Double click the result under System.Data that is named solely DataRow.
+
+Click Ok to finish creating the array of DataRows.
+
+
+The Variables panel should look like this:
+
+
+Find and add an Assign activity below Read CSV.
+
+Add the clubMembers variable in the To field of the activity.
+
+In the Value field, type names.Select("[Club Member]= ‘Yes’ ")
+
+We must use [square brackets] with the Select method when the column name contains spaces.
+
+That extracts all the rows where the Club Member field matches the “Yes” string and stores them into the clubMembers array variable.
+
+This is what the workflow should look like:
+
+
+
+ 
+
+Create nicknames from all the filtered names in the array of rows by using a loop, String methods, and the Write Line activity.
+
+Find and add a For Each activity below Assign.
+
+Set the TypeArgument property to DataRow in the Browse for types window. Add the clubMembers variable in the Values property field.
+
+Rename item to row for clarity.
+
+Create two String variables called firstName and lastName
+
+Drag an Assign activity into the body of the For Each loop.
+
+Add the firstName variable in the To field of the activity
+
+In the Value field, type row("First").ToString
+
+Drag another Assign activity into the body of the For Each loop, after the one we have just created.
+
+This time, add the lastName variable in the To field of the activity
+
+In the Value field, type in: row("Last").ToString
+
+Now, the sequence should look like this:
+
+
+
+The next step is to generate the nickname. First, it should extract the first 3 letters of the first name and switch all of them to uppercase. Then it should extract the first 3 letters of the last name and switch them to lowercase. Finally, both parts should be combined together - or concatenated.
+
+Create a string called nickname.
+
+Find and add an Assign activity.
+
+In the To field, insert the nickname variable.
+
+In the Value property field, write the following:
+
+firstName.Substring(0,3).ToUpper + lastName.Substring(0,3).ToLower.
+
+firstName.Substring(0,3) takes a subsection of firstName, starting from index 0, of a length of 3 characters.
+
+Character	S	a	l	l	y
+Index	0	1	2	3	4
+o   .ToUpper converts the substring to uppercase.
+
+o   Likewise, lastName.Substring(0,3).ToLower takes the first 3 characters of the last name as a substring and converts them to lowercase.
+
+o   The + operator concatenates, or adds, the substrings together.
+
+To add the finishing touches, drag a Write Line activity that displays the final result into the workflow.
+
+Find the Write Line activity and place it into the For Loop, under the three Assign activities.
+
+In the Text field, insert the nickname variable.
+
+This is what the final sequence should look like:
+
+
+
+In order to see what has been written inside the Output panel click on the Output Button.
+
+
